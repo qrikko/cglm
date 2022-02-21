@@ -3,7 +3,7 @@ project "cglm"
 	language "C"
 	cdialect "C11"
 	staticruntime "on"
-	toolset "clang"
+	tool()
 
 	targetdir (engine_root .. "/lib/" .. outputdir)
 	objdir (engine_root .. "/bin-int/" .. outputdir .. "/%{prj.name}")
