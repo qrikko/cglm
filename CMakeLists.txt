@@ -63,6 +63,9 @@ add_library(${PROJECT_NAME}
   src/vec2.c
   src/vec3.c
   src/vec4.c
+  src/ivec2.c
+  src/ivec3.c
+  src/ivec4.c
   src/mat2.c
   src/mat3.c
   src/mat4.c
@@ -150,8 +153,16 @@ install(EXPORT      ${PROJECT_NAME}
 set(PACKAGE_NAME ${PROJECT_NAME})
 set(prefix ${CMAKE_INSTALL_PREFIX})
 set(exec_prefix ${CMAKE_INSTALL_PREFIX})
-set(includedir "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
-set(libdir "\${prefix}/${CMAKE_INSTALL_LIBDIR}")
+if (IS_ABSOLUTE "${CMAKE_INSTALL_INCLUDEDIR}")
+  set(includedir "${CMAKE_INSTALL_INCLUDEDIR}")
+else()
+  set(includedir "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
+endif()
+if (IS_ABSOLUTE "${CMAKE_INSTALL_LIBDIR}")
+  set(libdir "${CMAKE_INSTALL_LIBDIR}")
+else()
+  set(libdir "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}")
+endif()
 set(PACKAGE_VERSION "${PROJECT_VERSION}")
 configure_file(${CMAKE_CURRENT_LIST_DIR}/cglm.pc.in ${CMAKE_BINARY_DIR}/cglm.pc @ONLY)
 
