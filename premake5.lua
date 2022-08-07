@@ -1,12 +1,15 @@
 project "cglm"
 	kind "staticLib"
 	language "C"
-	cdialect "C11"
 	staticruntime "on"
-	tool()
+	language (engine.compiler.language)
+	cdialect (engine.compiler.dialect)
+	toolset (engine.compiler.toolset)
 
-	targetdir (engine_root .. "/lib/" .. outputdir)
-	objdir (engine_root .. "/bin-int/" .. outputdir .. "cglm")
+	staticruntime "on"
+
+	targetdir (engine.lib)
+	objdir (engine.intermediate)
 
 	files {
 		"src/euler.c",
