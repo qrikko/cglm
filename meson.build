@@ -1,9 +1,8 @@
 project('cglm', 'c',
-    version : '0.8.6',
+    version : '0.9.2',
     license : 'mit',
     default_options : [
         'c_std=c11',
-        'werror=true',
         'warning_level=2',
         'buildtype=release'
     ]
@@ -18,40 +17,54 @@ cglm_args = []
 build_args = []
 
 if get_option('default_library') == 'static'
-    cglm_args = '-DCGLM_STATIC'
+    cglm_args += '-DCGLM_STATIC'
+endif
+
+if cc.compiles(
+    'int *test(char *p) { return (int*)__builtin_assume_aligned(p, 4); }',
+    name : '__builtin_assume_aligned test')
+    cglm_args += '-DCGLM_HAVE_BUILTIN_ASSUME_ALIGNED=1'
+else
+    cglm_args += '-DCGLM_HAVE_BUILTIN_ASSUME_ALIGNED=0'
 endif
 
 if host_machine.system() == 'windows'
-    build_args = '-DCGLM_EXPORTS'
+    build_args += '-DCGLM_EXPORTS'
 endif
 
 cglm_inc = include_directories('include')
 
 cglm_src = files(
-    'src/affine.c',
-    'src/affine2d.c',
-    'src/bezier.c',
-    'src/box.c',
-    'src/cam.c',
-    'src/curve.c',
-    'src/ease.c',
     'src/euler.c',
-    'src/frustum.c',
+    'src/affine.c',
     'src/io.c',
-    'src/mat2.c',
-    'src/mat3.c',
-    'src/mat4.c',
-    'src/plane.c',
-    'src/project.c',
     'src/quat.c',
-    'src/ray.c',
-    'src/sphere.c',
+    'src/cam.c',
     'src/vec2.c',
-    'src/vec3.c',
-    'src/vec4.c',
     'src/ivec2.c',
+    'src/vec3.c',
     'src/ivec3.c',
+    'src/vec4.c',
     'src/ivec4.c',
+    'src/mat2.c',
+    'src/mat2x3.c',
+    'src/mat2x4.c',
+    'src/mat3.c',
+    'src/mat3x2.c',
+    'src/mat3x4.c',
+    'src/mat4.c',
+    'src/mat4x2.c',
+    'src/mat4x3.c',
+    'src/plane.c',
+    'src/frustum.c',
+    'src/box.c',
+    'src/project.c',
+    'src/sphere.c',
+    'src/ease.c',
+    'src/curve.c',
+    'src/bezier.c',
+    'src/ray.c',
+    'src/affine2d.c',
     'src/clipspace/ortho_lh_no.c',
     'src/clipspace/ortho_lh_zo.c',
     'src/clipspace/ortho_rh_no.c',
@@ -64,6 +77,8 @@ cglm_src = files(
     'src/clipspace/view_lh_zo.c',
     'src/clipspace/view_rh_no.c',
     'src/clipspace/view_rh_zo.c',
+    'src/clipspace/project_no.c',
+    'src/clipspace/project_zo.c'
 )
 
 cglm_lib = library('cglm',
@@ -106,11 +121,6 @@ if get_option('build_tests') == true
 test_src = files(
     'test/runner.c',
     'test/src/test_bezier.c',
-    'test/src/test_cam.c',
-    'test/src/test_cam_lh_no.c',
-    'test/src/test_cam_lh_zo.c',
-    'test/src/test_cam_rh_no.c',
-    'test/src/test_cam_rh_zo.c',
     'test/src/test_clamp.c',
     'test/src/test_common.c',
     'test/src/test_euler.c',

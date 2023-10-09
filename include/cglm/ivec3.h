@@ -6,7 +6,13 @@
  */
 
 /*
-FUNCTIONS:
+ Macros:
+   GLM_IVEC3_ONE_INIT
+   GLM_IVEC3_ZERO_INIT
+   GLM_IVEC3_ONE
+   GLM_IVEC3_ZERO
+
+ Functions:
   CGLM_INLINE void glm_ivec3(ivec4 v4, ivec3 dest)
   CGLM_INLINE void glm_ivec3_copy(ivec3 a, ivec3 dest)
   CGLM_INLINE void glm_ivec3_zero(ivec3 v)
@@ -19,15 +25,25 @@ FUNCTIONS:
   CGLM_INLINE void glm_ivec3_scale(ivec3 v, int s, ivec3 dest)
   CGLM_INLINE int glm_ivec3_distance2(ivec3 a, ivec3 b)
   CGLM_INLINE float glm_ivec3_distance(ivec3 a, ivec3 b)
+  CGLM_INLINE void glm_ivec3_fill(ivec3 v, int val);
+  CGLM_INLINE bool glm_ivec3_eq(ivec3 v, int val);
+  CGLM_INLINE bool glm_ivec3_eqv(ivec3 a, ivec3 b);
   CGLM_INLINE void glm_ivec3_maxv(ivec3 a, ivec3 b, ivec3 dest)
   CGLM_INLINE void glm_ivec3_minv(ivec3 a, ivec3 b, ivec3 dest)
   CGLM_INLINE void glm_ivec3_clamp(ivec3 v, int minVal, int maxVal)
+  CGLM_INLINE void glm_ivec3_abs(ivec3 v, ivec3 dest)
  */
 
 #ifndef cglm_ivec3_h
 #define cglm_ivec3_h
 
 #include "common.h"
+
+#define GLM_IVEC3_ONE_INIT   {1, 1, 1}
+#define GLM_IVEC3_ZERO_INIT  {0, 0, 0}
+
+#define GLM_IVEC3_ONE  ((ivec3)GLM_IVEC3_ONE_INIT)
+#define GLM_IVEC3_ZERO ((ivec3)GLM_IVEC3_ZERO_INIT)
 
 /*!
  * @brief init ivec3 using ivec4
@@ -200,6 +216,44 @@ glm_ivec3_distance(ivec3 a, ivec3 b) {
 }
 
 /*!
+ * @brief fill a vector with specified value
+ *
+ * @param[out] v   dest
+ * @param[in]  val value
+ */
+CGLM_INLINE
+void
+glm_ivec3_fill(ivec3 v, int val) {
+  v[0] = v[1] = v[2] = val;
+}
+
+/*!
+ * @brief check if vector is equal to value
+ *
+ * @param[in] v   vector
+ * @param[in] val value
+ */
+CGLM_INLINE
+bool
+glm_ivec3_eq(ivec3 v, int val) {
+  return v[0] == val && v[0] == v[1] && v[0] == v[2];
+}
+
+/*!
+ * @brief check if vector is equal to another
+ *
+ * @param[in] a vector
+ * @param[in] b vector
+ */
+CGLM_INLINE
+bool
+glm_ivec3_eqv(ivec3 a, ivec3 b) {
+  return a[0] == b[0]
+         && a[1] == b[1]
+         && a[2] == b[2];
+}
+
+/*!
  * @brief set each member of dest to greater of vector a and b
  *
  * @param[in]  a    first vector
@@ -253,6 +307,20 @@ glm_ivec3_clamp(ivec3 v, int minVal, int maxVal) {
     v[2] = minVal;
   else if(v[2] > maxVal)
     v[2] = maxVal;
+}
+
+/*!
+ * @brief absolute value of v
+ *
+ * @param[in]	v	vector
+ * @param[out]	dest	destination
+ */
+CGLM_INLINE
+void
+glm_ivec3_abs(ivec3 v, ivec3 dest) {
+  dest[0] = abs(v[0]);
+  dest[1] = abs(v[1]);
+  dest[2] = abs(v[2]);
 }
 
 #endif /* cglm_ivec3_h */

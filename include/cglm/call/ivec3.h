@@ -63,6 +63,18 @@ glmc_ivec3_distance(ivec3 a, ivec3 b);
 
 CGLM_EXPORT
 void
+glmc_ivec3_fill(ivec3 v, int val);
+
+CGLM_EXPORT
+bool
+glmc_ivec3_eq(ivec3 v, int val);
+
+CGLM_EXPORT
+bool
+glmc_ivec3_eqv(ivec3 a, ivec3 b);
+
+CGLM_EXPORT
+void
 glmc_ivec3_maxv(ivec3 a, ivec3 b, ivec3 dest);
 
 CGLM_EXPORT
@@ -72,6 +84,10 @@ glmc_ivec3_minv(ivec3 a, ivec3 b, ivec3 dest);
 CGLM_EXPORT
 void
 glmc_ivec3_clamp(ivec3 v, int minVal, int maxVal);
+
+CGLM_EXPORT
+void
+glmc_ivec3_abs(ivec3 v, ivec3 dest);
 
 #ifdef __cplusplus
 }

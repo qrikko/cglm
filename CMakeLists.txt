@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.8.2)
-project(cglm VERSION 0.8.6 LANGUAGES C)
+project(cglm
+  VERSION 0.9.2
+  HOMEPAGE_URL https://github.com/recp/cglm
+  DESCRIPTION "OpenGL Mathematics (glm) for C"
+  LANGUAGES C
+)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED YES)
@@ -10,6 +15,11 @@ option(CGLM_SHARED "Shared build" ON)
 option(CGLM_STATIC "Static build" OFF)
 option(CGLM_USE_C99 "" OFF)
 option(CGLM_USE_TEST "Enable Tests" OFF)
+
+if(CMAKE_SYSTEM_NAME STREQUAL WASI)
+  set(CGLM_STATIC ON CACHE BOOL "Static option" FORCE)
+  set(CGLM_SHARED OFF CACHE BOOL "Shared option" FORCE)
+endif()
 
 if(NOT CGLM_STATIC AND CGLM_SHARED)
   set(CGLM_BUILD SHARED)
@@ -33,10 +43,12 @@ if(MSVC)
     string(REGEX REPLACE "/RTC(su|[1su])" "" ${flag_var} "${${flag_var}}")
   endforeach(flag_var)
 else()
-  add_compile_options(-Wall -Werror -O3)
+  add_compile_options(-Wall -O3)
 endif()
 
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+get_directory_property(hasParent PARENT_DIRECTORY)
+
+if(NOT hasParent AND NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to '${DEFAULT_BUILD_TYPE}' as none was specified.")
   set(CMAKE_BUILD_TYPE "${DEFAULT_BUILD_TYPE}" CACHE STRING "Choose the type of build." FORCE)
   # Set the possible values of build type for cmake-gui
@@ -61,14 +73,20 @@ add_library(${PROJECT_NAME}
   src/quat.c
   src/cam.c
   src/vec2.c
-  src/vec3.c
-  src/vec4.c
   src/ivec2.c
+  src/vec3.c
   src/ivec3.c
+  src/vec4.c
   src/ivec4.c
   src/mat2.c
+  src/mat2x3.c
+  src/mat2x4.c
   src/mat3.c
+  src/mat3x2.c
+  src/mat3x4.c
   src/mat4.c
+  src/mat4x2.c
+  src/mat4x3.c
   src/plane.c
   src/frustum.c
   src/box.c
@@ -79,18 +97,20 @@ add_library(${PROJECT_NAME}
   src/bezier.c
   src/ray.c
   src/affine2d.c
-  src/clipspace/persp_lh_zo.c
-  src/clipspace/persp_rh_zo.c
-  src/clipspace/persp_lh_no.c
-  src/clipspace/persp_rh_no.c
-  src/clipspace/ortho_lh_zo.c
-  src/clipspace/ortho_rh_zo.c
   src/clipspace/ortho_lh_no.c
+  src/clipspace/ortho_lh_zo.c
   src/clipspace/ortho_rh_no.c
-  src/clipspace/view_lh_zo.c
-  src/clipspace/view_rh_zo.c
+  src/clipspace/ortho_rh_zo.c
+  src/clipspace/persp_lh_no.c
+  src/clipspace/persp_lh_zo.c
+  src/clipspace/persp_rh_no.c
+  src/clipspace/persp_rh_zo.c
   src/clipspace/view_lh_no.c
+  src/clipspace/view_lh_zo.c
   src/clipspace/view_rh_no.c
+  src/clipspace/view_rh_zo.c
+  src/clipspace/project_no.c
+  src/clipspace/project_zo.c
   )
 
 if(CGLM_SHARED)
@@ -164,7 +184,7 @@ else()
   set(libdir "\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}")
 endif()
 set(PACKAGE_VERSION "${PROJECT_VERSION}")
-configure_file(${CMAKE_CURRENT_LIST_DIR}/cglm.pc.in ${CMAKE_BINARY_DIR}/cglm.pc @ONLY)
+configure_file(cglm.pc.in cglm.pc @ONLY)
 
-install(FILES ${CMAKE_BINARY_DIR}/cglm.pc
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/cglm.pc
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)

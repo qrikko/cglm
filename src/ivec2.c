@@ -82,6 +82,24 @@ glmc_ivec2_distance(ivec2 a, ivec2 b) {
 
 CGLM_EXPORT
 void
+glmc_ivec2_fill(ivec2 v, int val) {
+  glm_ivec2_fill(v, val);
+}
+
+CGLM_EXPORT
+bool
+glmc_ivec2_eq(ivec2 v, int val) {
+  return glm_ivec2_eq(v, val);
+}
+
+CGLM_EXPORT
+bool
+glmc_ivec2_eqv(ivec2 a, ivec2 b) {
+  return glm_ivec2_eqv(a, b);
+}
+
+CGLM_EXPORT
+void
 glmc_ivec2_maxv(ivec2 a, ivec2 b, ivec2 dest) {
   glm_ivec2_maxv(a, b, dest);
 }
@@ -97,3 +115,10 @@ void
 glmc_ivec2_clamp(ivec2 v, int minVal, int maxVal) {
   glm_ivec2_clamp(v, minVal, maxVal);
 }
+
+CGLM_EXPORT
+void
+glmc_ivec2_abs(ivec2 v, ivec2 dest) {
+  glm_ivec2_abs(v, dest);
+}
+

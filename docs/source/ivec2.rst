@@ -8,6 +8,13 @@ Header: cglm/ivec2.h
 Table of contents (click to go):
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Macros:
+
+1. GLM_IVEC2_ONE_INIT
+#. GLM_IVEC2_ZERO_INIT
+#. GLM_IVEC2_ONE
+#. GLM_IVEC2_ZERO
+
 Functions:
 
 1. :c:func:`glm_ivec2`
@@ -25,6 +32,7 @@ Functions:
 #. :c:func:`glm_ivec2_maxv`
 #. :c:func:`glm_ivec2_minv`
 #. :c:func:`glm_ivec2_clamp`
+#. :c:func:`glm_ivec2_abs`
 
 Functions documentation
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,6 +143,31 @@ Functions documentation
     Returns:
         distance
 
+.. c:function:: void  glm_ivec2_fill(ivec2 v, int val)
+
+    fill a vector with specified value
+
+    Parameters:
+      | *[out]*  **v**    vector
+      | *[in]*   **val**  value
+
+.. c:function:: bool  glm_ivec2_eq(ivec2 v, int val)
+
+    check if vector is equal to value
+
+    Parameters:
+      | *[in]*  **v**    vector
+      | *[in]*  **val**  value
+
+.. c:function:: bool  glm_ivec2_eqv(ivec2 v1, ivec2 v2)
+
+    check if vector is equal to another vector
+
+    Parameters:
+      | *[in]*  **vec**   vector 1
+      | *[in]*  **vec**   vector 2
+
+
 .. c:function:: void glm_ivec2_maxv(ivec2 a, ivec2 b, ivec2 dest)
 
     set each member of dest to greater of vector a and b
@@ -161,3 +194,11 @@ Functions documentation
       | *[in, out]* **v**      vector
       | *[in]*      **minVal** minimum value
       | *[in]*      **maxVal** maximum value
+
+.. c:function:: void glm_ivec2_abs(ivec2 v, ivec2 dest)
+
+    absolute value of each vector item
+
+    Parameters:
+      | *[in]*   **v**     vector
+      | *[out]*  **dest**  destination vector

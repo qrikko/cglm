@@ -8,6 +8,13 @@ Header: cglm/ivec3.h
 Table of contents (click to go):
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Macros:
+
+1. GLM_IVEC3_ONE_INIT
+#. GLM_IVEC3_ZERO_INIT
+#. GLM_IVEC3_ONE
+#. GLM_IVEC3_ZERO
+
 Functions:
 
 1. :c:func:`glm_ivec3`
@@ -22,9 +29,13 @@ Functions:
 #. :c:func:`glm_ivec3_scale`
 #. :c:func:`glm_ivec3_distance2`
 #. :c:func:`glm_ivec3_distance`
+#. :c:func:`glm_ivec3_fill`
+#. :c:func:`glm_ivec3_eq`
+#. :c:func:`glm_ivec3_eqv`
 #. :c:func:`glm_ivec3_maxv`
 #. :c:func:`glm_ivec3_minv`
 #. :c:func:`glm_ivec3_clamp`
+#. :c:func:`glm_ivec2_abs`
 
 Functions documentation
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,6 +146,30 @@ Functions documentation
     Returns:
         distance
 
+.. c:function:: void  glm_ivec3_fill(ivec3 v, int val)
+
+    fill a vector with specified value
+
+    Parameters:
+      | *[out]*  **v**    vector
+      | *[in]*   **val**  value
+
+.. c:function:: bool  glm_ivec3_eq(ivec3 v, int val)
+
+    check if vector is equal to value
+
+    Parameters:
+      | *[in]*  **v**    vector
+      | *[in]*  **val**  value
+
+.. c:function:: bool  glm_ivec3_eqv(ivec3 v1, ivec3 v2)
+
+    check if vector is equal to another vector
+
+    Parameters:
+      | *[in]*  **vec**   vector 1
+      | *[in]*  **vec**   vector 2
+
 .. c:function:: void glm_ivec3_maxv(ivec3 a, ivec3 b, ivec3 dest)
 
     set each member of dest to greater of vector a and b
@@ -161,3 +196,11 @@ Functions documentation
       | *[in, out]* **v**      vector
       | *[in]*      **minVal** minimum value
       | *[in]*      **maxVal** maximum value
+
+.. c:function:: void glm_ivec3_abs(ivec3 v, ivec3 dest)
+
+    absolute value of each vector item
+
+    Parameters:
+      | *[in]*   **v**     vector
+      | *[out]*  **dest**  destination vector

@@ -1,7 +1,7 @@
 /*
  * Copyright (c), Recep Aslantas.
  *
- * MIT License (MIT), htt../opensource.org/licenses/MIT
+ * MIT License (MIT), http://opensource.org/licenses/MIT
  * Full license can be found in the LICENSE file
  */
 
@@ -64,7 +64,7 @@ glms_ortho_aabb_rh_no(vec3s box[2]) {
   mat4s dest;
   vec3  rawBox[2];
 
-  glms_vec3_unpack(rawBox, box, 2);
+  glms_vec3_(unpack)(rawBox, box, 2);
   glm_ortho_aabb_rh_no(rawBox, dest.raw);
 
   return dest;
@@ -87,7 +87,7 @@ glms_ortho_aabb_p_rh_no(vec3s box[2], float padding) {
   mat4s dest;
   vec3  rawBox[2];
 
-  glms_vec3_unpack(rawBox, box, 2);
+  glms_vec3_(unpack)(rawBox, box, 2);
   glm_ortho_aabb_p_rh_no(rawBox, padding, dest.raw);
 
   return dest;
@@ -110,7 +110,7 @@ glms_ortho_aabb_pz_rh_no(vec3s box[2], float padding) {
   mat4s dest;
   vec3  rawBox[2];
 
-  glms_vec3_unpack(rawBox, box, 2);
+  glms_vec3_(unpack)(rawBox, box, 2);
   glm_ortho_aabb_pz_rh_no(rawBox, padding, dest.raw);
 
   return dest;

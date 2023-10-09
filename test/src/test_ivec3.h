@@ -148,7 +148,43 @@ TEST_IMPL(GLM_PREFIX, ivec3_distance) {
   float v;
 
   v = GLM(ivec3_distance)(a, b);
-  ASSERT(test_eq(v, 6.1644140029))
+  ASSERT(test_eq(v, 6.1644140029f))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, ivec3_fill) {
+  ivec3 v1;
+  ivec3 v2 = {-1, 3, 4};
+
+  GLM(ivec3_fill)(v1, 1);
+  GLM(ivec3_fill)(v2, 2);
+
+  ASSERT(GLM(ivec3_eq)(v1, 1))
+  ASSERT(GLM(ivec3_eq)(v2, 2))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, ivec3_eq) {
+  ivec3 v1 = { -1, 2, 4 };
+
+  GLM(ivec3_fill)(v1, 2);
+
+  ASSERT(GLM(ivec3_eq)(v1, 2))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, ivec3_eqv) {
+  ivec3 v1, v2, v3;
+
+  GLM(ivec3_fill)(v1, 1);
+  GLM(ivec3_fill)(v2, 2);
+  GLM(ivec3_fill)(v3, 1);
+
+  ASSERT(GLM(ivec3_eqv)(v1, v3))
+  ASSERT(!GLM(ivec3_eqv)(v1, v2))
 
   TEST_SUCCESS
 }
@@ -194,6 +230,23 @@ TEST_IMPL(GLM_PREFIX, ivec3_clamp) {
   ASSERT(v[0] == -9)
   ASSERT(v[1] == 3)
   ASSERT(v[2] == 1)
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, ivec3_abs) {
+  ivec3  v1 = {2, -3, 4}, v2 = {-12, -31, -42};
+  ivec3  v3, v4;
+
+  GLM(ivec3_abs)(v1, v3);
+  GLM(ivec3_abs)(v2, v4);
+
+  ASSERT(v3[0] == 2)
+  ASSERT(v3[1] == 3)
+  ASSERT(v3[2] == 4)
+  ASSERT(v4[0] == 12)
+  ASSERT(v4[1] == 31)
+  ASSERT(v4[2] == 42)
 
   TEST_SUCCESS
 }
