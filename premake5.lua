@@ -1,12 +1,10 @@
 project "cglm"
-	kind "staticLib"
+	kind "StaticLib"
 	language "C"
 	staticruntime "on"
 	language (engine.compiler.language)
 	cdialect (engine.compiler.dialect)
 	toolset (engine.compiler.toolset)
-
-	staticruntime "on"
 
 	targetdir (engine.lib)
 	objdir (engine.intermediate)
@@ -53,3 +51,8 @@ project "cglm"
 	filter "configurations:Release"
 		runtime "Release"
 		optimize "on"
+	filter {}
+
+	filter "system:windows"
+		defines { "CGLM_STATIC" }
+	filter {}
