@@ -30,15 +30,20 @@
 #include "test_quat.h"
 #include "test_project.h"
 #include "test_plane.h"
+#include "test_noise.h"
 #include "test_affine.h"
 #include "test_affine2d.h"
+#include "test_affine2d_post.h"
 #include "test_affine_mat.h"
+#include "test_aabb2d.h"
 #include "test_ray.h"
 #include "test_cam.h"
 #include "test_cam_lh_no.h"
 #include "test_cam_lh_zo.h"
 #include "test_cam_rh_no.h"
 #include "test_cam_rh_zo.h"
+#include "test_euler_to_quat_rh.h"
+#include "test_euler_to_quat_lh.h"
 
 #undef GLM
 #undef GLM_PREFIX
@@ -67,15 +72,19 @@
 #include "test_quat.h"
 #include "test_project.h"
 #include "test_plane.h"
+#include "test_noise.h"
 #include "test_affine.h"
 #include "test_affine2d.h"
 #include "test_affine_mat.h"
+#include "test_aabb2d.h"
 #include "test_ray.h"
 #include "test_cam.h"
 #include "test_cam_lh_no.h"
 #include "test_cam_lh_zo.h"
 #include "test_cam_rh_no.h"
 #include "test_cam_rh_zo.h"
+#include "test_euler_to_quat_rh.h"
+#include "test_euler_to_quat_lh.h"
 
 #undef GLM
 #undef GLM_PREFIX

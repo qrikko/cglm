@@ -30,6 +30,8 @@
 #include "quat.h"
 #include "euler.h"
 #include "plane.h"
+#include "noise.h"
+#include "aabb2d.h"
 #include "box.h"
 #include "color.h"
 #include "util.h"
@@ -41,5 +43,6 @@
 #include "bezier.h"
 #include "ray.h"
 #include "affine2d.h"
+#include "affine2d-post.h"
 
 #endif /* cglm_h */

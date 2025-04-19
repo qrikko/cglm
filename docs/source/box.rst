@@ -62,7 +62,7 @@ Functions documentation
 
     | crops a bounding box with another one.
 
-    this could be useful for gettng a bbox which fits with view frustum and
+    this could be useful for getting a bbox which fits with view frustum and
     object bounding boxes. In this case you crop view frustum box with objects
     box
 
@@ -75,14 +75,14 @@ Functions documentation
 
     | crops a bounding box with another one.
 
-    this could be useful for gettng a bbox which fits with view frustum and
+    this could be useful for getting a bbox which fits with view frustum and
     object bounding boxes. In this case you crop view frustum box with objects
     box
 
     Parameters:
       | *[in]*  **box**      bounding box
       | *[in]*  **cropBox**  crop box
-      | *[in]*  **clampBox** miniumum box
+      | *[in]*  **clampBox** minimum box
       | *[out]* **dest**     cropped bounding box
 
 .. c:function:: bool  glm_aabb_frustum(vec3 box[2], vec4 planes[6])

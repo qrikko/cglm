@@ -292,11 +292,12 @@ TEST_IMPL(GLM_PREFIX, mat4_transpose) {
 TEST_IMPL(GLM_PREFIX, mat4_scale_p) {
   mat4 m1 = A_MATRIX;
   mat4 m2 = A_MATRIX;
-  int i, j, k, scale;
+  int i, j, k;
+  float scale;
 
   scale = rand() % 100;
   
-  GLM(mat4_scale_p)(m1, (float)scale);
+  GLM(mat4_scale_p)(m1, scale);
 
   for (i = 0; i < 4; i++) {
     for (j = 0; j < 4; j++) {
@@ -311,11 +312,12 @@ TEST_IMPL(GLM_PREFIX, mat4_scale_p) {
 TEST_IMPL(GLM_PREFIX, mat4_scale) {
   mat4 m1 = A_MATRIX;
   mat4 m2 = A_MATRIX;
-  int i, j, k, scale;
+  int i, j, k;
+  float scale;
 
   scale = rand() % 100;
   
-  GLM(mat4_scale)(m1, (float)scale);
+  GLM(mat4_scale)(m1, scale);
 
   for (i = 0; i < 4; i++) {
     for (j = 0; j < 4; j++) {
@@ -498,6 +500,28 @@ TEST_IMPL(GLM_PREFIX, mat4_make) {
     ASSERT(test_eq(dest[j][2], src[i+2]))
     ASSERT(test_eq(dest[j][3], src[i+3]))
   }
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, mat4_textrans) {
+  mat4  m, expected;
+  float sx = 2.0f, sy = 3.0f, rot = GLM_PI_4f;
+  float tx = 10.0f, ty = 20.0f;
+
+  GLM(mat4_textrans)(sx, sy, rot, tx, ty, m);
+
+  ASSERT(test_eq(m[0][0], cosf(rot) * sx))
+  ASSERT(test_eq(m[0][1],-sinf(rot) * sy))
+  ASSERT(test_eq(m[1][0], sinf(rot) * sx))
+  ASSERT(test_eq(m[1][1], cosf(rot) * sy))
+  ASSERT(test_eq(m[3][0], tx))
+  ASSERT(test_eq(m[3][1], ty))
+
+  GLM(mat4_textrans)(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, m);
+  GLM(mat4_identity)(expected);
+
+  ASSERTIFY(test_assert_mat4_eq(m, expected))
 
   TEST_SUCCESS
 }

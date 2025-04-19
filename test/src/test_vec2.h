@@ -241,7 +241,7 @@ TEST_IMPL(GLM_PREFIX, vec2_scale_as) {
   GLM(vec2_scale_as)(v1, s, v2);
 
   norm = sqrtf(v1[0] * v1[0] + v1[1] * v1[1]);
-  if (norm == 0.0f) {
+  if (norm < FLT_EPSILON) {
     ASSERT(test_eq(v1[0], 0.0f))
     ASSERT(test_eq(v1[1], 0.0f))
 
@@ -365,6 +365,90 @@ TEST_IMPL(GLM_PREFIX, vec2_minadd) {
   TEST_SUCCESS
 }
 
+TEST_IMPL(GLM_PREFIX, vec2_subsub) {
+  vec2 v1 = {2.0f, -3.0f},
+       v2 = {-3.0f, 4.0f},
+       v3 = {1.0f, 2.0f},
+       v4 = {1.0f, 2.0f};
+  
+  GLM(vec2_subsub)(v1, v2, v4);
+
+  ASSERT(test_eq(v3[0] - (v1[0] - v2[0]), v4[0]))
+  ASSERT(test_eq(v3[1] - (v1[1] - v2[1]), v4[1]))
+  
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_addsub) {
+  vec2 v1 = {2.0f, -3.0f},
+       v2 = {-3.0f, 4.0f},
+       v3 = {1.0f, 2.0f},
+       v4 = {1.0f, 2.0f};
+  
+  GLM(vec2_addsub)(v1, v2, v4);
+
+  ASSERT(test_eq(v3[0] - (v1[0] + v2[0]), v4[0]))
+  ASSERT(test_eq(v3[1] - (v1[1] + v2[1]), v4[1]))
+  
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_mulsub) {
+  vec2 v1 = {2.0f, -3.0f},
+       v2 = {-3.0f, 4.0f},
+       v3 = {1.0f, 2.0f},
+       v4 = {1.0f, 2.0f};
+  
+  GLM(vec2_mulsub)(v1, v2, v4);
+
+  ASSERT(test_eq(v3[0] - v1[0] * v2[0], v4[0]))
+  ASSERT(test_eq(v3[1] - v1[1] * v2[1], v4[1]))
+  
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_mulsubs) {
+  vec2 v1 = {2.0f, -3.0f},
+       v2 = {1.0f, 2.0f},
+       v3 = {1.0f, 2.0f};
+  float s = 9.0f;
+  
+  GLM(vec2_mulsubs)(v1, s, v3);
+
+  ASSERT(test_eq(v2[0] - v1[0] * s, v3[0]))
+  ASSERT(test_eq(v2[1] - v1[1] * s, v3[1]))
+  
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_maxsub) {
+  vec2 v1 = {2.0f, -3.0f},
+       v2 = {-3.0f, 4.0f},
+       v3 = {1.0f, 2.0f},
+       v4 = {1.0f, 2.0f};
+  
+  GLM(vec2_maxsub)(v1, v2, v4);
+
+  ASSERT(test_eq(v3[0] - glm_max(v1[0], v2[0]), v4[0]))
+  ASSERT(test_eq(v3[1] - glm_max(v1[1], v2[1]), v4[1]))
+  
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_minsub) {
+  vec2 v1 = {2.0f, -3.0f},
+       v2 = {-3.0f, 4.0f},
+       v3 = {1.0f, 2.0f},
+       v4 = {1.0f, 2.0f};
+  
+  GLM(vec2_minsub)(v1, v2, v4);
+
+  ASSERT(test_eq(v3[0] - glm_min(v1[0], v2[0]), v4[0]))
+  ASSERT(test_eq(v3[1] - glm_min(v1[1], v2[1]), v4[1]))
+  
+  TEST_SUCCESS
+}
+
 TEST_IMPL(GLM_PREFIX, vec2_negate_to) {
   vec2 v1 = {2.0f, -3.0f},
        v2 = {-3.0f, 4.0f},
@@ -408,7 +492,7 @@ TEST_IMPL(GLM_PREFIX, vec2_normalize) {
   GLM(vec2_normalize)(v2);
 
   norm = sqrtf(v1[0] * v1[0] + v1[1] * v1[1]);
-  if (norm == 0.0f) {
+  if (norm < FLT_EPSILON) {
     ASSERT(test_eq(v1[0], 0.0f))
     ASSERT(test_eq(v1[1], 0.0f))
 
@@ -435,7 +519,7 @@ TEST_IMPL(GLM_PREFIX, vec2_normalize_to) {
   GLM(vec2_normalize_to)(v1, v2);
 
   norm = sqrtf(v1[0] * v1[0] + v1[1] * v1[1]);
-  if (norm == 0.0f) {
+  if (norm < FLT_EPSILON) {
     ASSERT(test_eq(v1[0], 0.0f))
     ASSERT(test_eq(v1[1], 0.0f))
 
@@ -476,6 +560,17 @@ TEST_IMPL(GLM_PREFIX, vec2_rotate) {
 
   ASSERT(test_eq(v1[0], 1.0f))
   ASSERT(test_eq(v1[1], 0.0f))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_center) {
+  vec2 v1 = {1.0f, 1.0f},
+       v2 = {0.0f, 0.0f};
+  vec2 dest;
+  GLM(vec2_center)(v1, v2, dest);
+
+  ASSERTIFY(test_assert_vec2_eq(dest, (vec2){ 0.5f, 0.5f }))
 
   TEST_SUCCESS
 }
@@ -593,6 +688,70 @@ TEST_IMPL(GLM_PREFIX, vec2_abs) {
   TEST_SUCCESS
 }
 
+TEST_IMPL(GLM_PREFIX, vec2_fract) {
+  vec2 v1 = {2.104f, 3.012f}, v2 = {12.35f, 31.140f}, v3, v4;
+  vec2 v5 = {0.104f, 0.012f}, v6 = {0.35f, 0.140f};
+
+  GLM(vec2_fract)(v1, v3);
+  GLM(vec2_fract)(v2, v4);
+
+  ASSERTIFY(test_assert_vec2_eq(v3, v5))
+  ASSERTIFY(test_assert_vec2_eq(v4, v6))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_floor) {
+  vec2 v1 = {2.104f, 3.012f}, v2 = {12.35f, 31.140f}, v3, v4;
+  vec2 v5 = {2.0f, 3.0f}, v6 = {12.0f, 31.0f};
+
+  GLM(vec2_floor)(v1, v3);
+  GLM(vec2_floor)(v2, v4);
+
+  ASSERTIFY(test_assert_vec2_eq(v3, v5))
+  ASSERTIFY(test_assert_vec2_eq(v4, v6))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_mods) {
+  vec2 v1 = {2.104f, 3.012f}, v2 = {12.35f, 31.140f}, v3, v4;
+  vec2 v5 = {0.104f, 0.012f}, v6 = {0.35f, 0.140f};
+
+  /* Mod 1 - leaves just the fractional part */
+  GLM(vec2_mods)(v1, 1.0f, v3);
+  GLM(vec2_mods)(v2, 1.0f, v4);
+
+  ASSERTIFY(test_assert_vec2_eq(v3, v5))
+  ASSERTIFY(test_assert_vec2_eq(v4, v6))
+
+  /* Mod 2 - parity + fractional part */
+  GLM(vec2_mods)(v1, 2.0f, v3);
+  GLM(vec2_mods)(v2, 2.0f, v4);
+
+  vec2 v7 = {0.104f, 1.012f}, v8 = {0.35f, 1.140f};
+
+  ASSERTIFY(test_assert_vec2_eq(v3, v7))
+  ASSERTIFY(test_assert_vec2_eq(v4, v8))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_swizzle) {
+  vec2 v;
+
+  v[0] = 1;
+  v[1] = 2;
+  
+  GLM(vec2_swizzle)(v, GLM_SHUFFLE2(1, 0), v);
+  ASSERTIFY(test_assert_vec2_eq(v, (vec2){2, 1}))
+  
+  GLM(vec2_swizzle)(v, GLM_SHUFFLE2(0, 0), v);
+  ASSERTIFY(test_assert_vec2_eq(v, (vec2){1, 1}))
+  
+  TEST_SUCCESS
+}
+
 TEST_IMPL(GLM_PREFIX, vec2_lerp) {
   vec2 v1 = {-100.0f, -200.0f};
   vec2 v2 = {100.0f, 200.0f};
@@ -605,6 +764,66 @@ TEST_IMPL(GLM_PREFIX, vec2_lerp) {
   GLM(vec2_lerp)(v1, v2, 0.75f, v3);
   ASSERT(test_eq(v3[0], 50.0f))
   ASSERT(test_eq(v3[1], 100.0f))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_steps) {
+  vec2 v1 = {-100.0f, -200.0f};
+  vec2 v2;
+
+  GLM(vec2_steps)(-2.5f, v1, v2);
+  ASSERT(test_eq(v2[0], 0.0f))
+  ASSERT(test_eq(v2[1], 0.0f))
+  
+  GLM(vec2_steps)(-150.0f, v1, v2);
+  ASSERT(test_eq(v2[0], 1.0f))
+  ASSERT(test_eq(v2[1], 0.0f))
+  
+  GLM(vec2_steps)(-300.0f, v1, v2);
+  ASSERT(test_eq(v2[0], 1.0f))
+  ASSERT(test_eq(v2[1], 1.0f))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_stepr) {
+  vec2 v1 = {-2.5f, -150.0f};
+  vec2 v2;
+
+  GLM(vec2_stepr)(v1, -200.0f, v2);
+  ASSERT(test_eq(v2[0], 0.0f))
+  ASSERT(test_eq(v2[1], 0.0f))
+  
+  GLM(vec2_stepr)(v1, -150.0f, v2);
+  ASSERT(test_eq(v2[0], 0.0f))
+  ASSERT(test_eq(v2[1], 1.0f))
+  
+  GLM(vec2_stepr)(v1, 0.0f, v2);
+  ASSERT(test_eq(v2[0], 1.0f))
+  ASSERT(test_eq(v2[1], 1.0f))
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_step) {
+  vec2 v1 = {-100.0f, -200.0f};
+  vec2 s1 = {-100.0f, 0.0f};
+  vec2 s2 = {100.0f, -220.0f};
+  vec2 s3 = {100.0f, 200.0f};
+  vec2 v2;
+
+  GLM(vec2_step)(s1, v1, v2);
+  ASSERT(test_eq(v2[0], 1.0f))
+  ASSERT(test_eq(v2[1], 0.0f))
+  
+  GLM(vec2_step)(s2, v1, v2);
+  ASSERT(test_eq(v2[0], 0.0f))
+  ASSERT(test_eq(v2[1], 1.0f))
+  
+  GLM(vec2_step)(s3, v1, v2);
+  ASSERT(test_eq(v2[0], 0.0f))
+  ASSERT(test_eq(v2[1], 0.0f))
 
   TEST_SUCCESS
 }
@@ -653,6 +872,79 @@ TEST_IMPL(GLM_PREFIX, vec2_make) {
     GLM(vec2_make)(srcp + i, dest[j]);
     ASSERT(test_eq(src[ i ], dest[j][0]));
     ASSERT(test_eq(src[i+1], dest[j][1]));
+  }
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_reflect) {
+  vec2 dest;
+
+  /* Reflecting off a "horizontal" surface in 2D */
+  vec2 I1 = {1.0f, -1.0f}; /* Incoming vector */
+  vec2 N1 = {0.0f, 1.0f};  /* Normal vector */
+  GLM(vec2_reflect)(I1, N1, dest);
+  ASSERT(fabsf(dest[0] - 1.0f) < 0.00001f &&
+         fabsf(dest[1] - 1.0f) < 0.00001f); /* Expect reflection upwards */
+
+  /* Reflecting at an angle in 2D */
+  vec2 I2 = {sqrtf(2)/2, -sqrtf(2)/2}; /* Incoming vector at 45 degrees */
+  vec2 N2 = {0.0f, 1.0f}; /* Upwards normal vector */
+  GLM(vec2_reflect)(I2, N2, dest);
+  ASSERT(fabsf(dest[0] - sqrtf(2)/2) < 0.00001f &&
+         fabsf(dest[1] - sqrtf(2)/2) < 0.00001f); /* Expect reflection upwards */
+
+  /* Reflecting off a line in 2D representing a "vertical" surface analogy */
+  vec2 I3 = {1.0f, 0.0f};  /* Incoming vector */
+  vec2 N3 = {-1.0f, 0.0f}; /* Normal vector representing a "vertical" line */
+  GLM(vec2_reflect)(I3, N3, dest);
+  ASSERT(fabsf(dest[0] + 1.0f) < 0.00001f &&
+         fabsf(dest[1]) < 0.00001f); /* Expect reflection to the left */
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, vec2_refract) {
+  vec2  v = {sqrtf(0.5f), -sqrtf(0.5f)}; /* Incoming vector at 45 degrees to normal */
+  vec2  N = {0.0f, 1.0f};                /* Surface normal */
+  vec2  dest;
+  float eta;
+  float r;
+
+  /* Water to Air (eta = 1.33/1.0) */
+  eta = 1.33f / 1.0f;
+  r = GLM(vec2_refract)(v, N, eta, dest);
+  // In 2D, we expect a similar bending behavior as in 3D, so we check dest[1]
+  if (!(dest[0] == 0.0f && dest[1] == 0.0f)) {
+    ASSERT(dest[1] < -0.3f); // Refracted ray bends away from the normal
+    ASSERT(r == true);
+  } else {
+    ASSERT(dest[0] == 0.0f && dest[1] == 0.0f); // Total internal reflection
+    ASSERT(r == false);
+  }
+
+  /* Air to Glass (eta = 1.0 / 1.5) */
+  eta = 1.0f / 1.5f;
+  r = GLM(vec2_refract)(v, N, eta, dest);
+  ASSERT(r == true);
+  ASSERT(dest[1] < -sqrtf(0.5f)); // Expect bending towards the normal
+
+  /* Glass to Water (eta = 1.5 / 1.33) */
+  eta = 1.5f / 1.33f;
+  r = GLM(vec2_refract)(v, N, eta, dest);
+  ASSERT(r == true);
+  ASSERT(dest[1] < -0.6f); // Expect bending towards the normal, less bending than air to glass
+
+  /* Diamond to Air (eta = 2.42 / 1.0) */
+  eta = 2.42f / 1.0f;
+  r = GLM(vec2_refract)(v, N, eta, dest);
+  if (!(dest[0] == 0.0f && dest[1] == 0.0f)) {
+    /* High potential for total internal reflection, but if it occurs, expect significant bending */
+    ASSERT(dest[1] < -sqrtf(0.5f));
+    ASSERT(r == true);
+  } else {
+    ASSERT(dest[0] == 0.0f && dest[1] == 0.0f); // Total internal reflection
+    ASSERT(r == false);
   }
 
   TEST_SUCCESS

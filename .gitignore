@@ -80,3 +80,6 @@ confdefs.h
 cmake-build-debug
 *.o.tmp
 xcode/*
+.vscode
+.build
+*.swp

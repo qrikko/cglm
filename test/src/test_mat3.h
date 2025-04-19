@@ -184,11 +184,12 @@ TEST_IMPL(GLM_PREFIX, mat3_transpose) {
 TEST_IMPL(GLM_PREFIX, mat3_scale) {
   mat3 m1 = A_MATRIX;
   mat3 m2 = A_MATRIX;
-  int i, j, k, scale;
+  int i, j, k;
+  float scale;
 
   scale = rand() % 100;
 
-  GLM(mat3_scale)(m1, (float)scale);
+  GLM(mat3_scale)(m1, scale);
 
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
@@ -322,6 +323,28 @@ TEST_IMPL(GLM_PREFIX, mat3_make) {
     ASSERT(test_eq(dest[j][1], src[i+1]))
     ASSERT(test_eq(dest[j][2], src[i+2]))
   }
+
+  TEST_SUCCESS
+}
+
+TEST_IMPL(GLM_PREFIX, mat3_textrans) {
+  mat3  m, expected;
+  float sx = 2.0f, sy = 3.0f, rot = GLM_PI_4f;
+  float tx = 10.0f, ty = 20.0f;
+
+  GLM(mat3_textrans)(sx, sy, rot, tx, ty, m);
+
+  ASSERT(test_eq(m[0][0], cosf(rot) * sx))
+  ASSERT(test_eq(m[0][1],-sinf(rot) * sy))
+  ASSERT(test_eq(m[1][0], sinf(rot) * sx))
+  ASSERT(test_eq(m[1][1], cosf(rot) * sy))
+  ASSERT(test_eq(m[2][0], tx))
+  ASSERT(test_eq(m[2][1], ty))
+
+  GLM(mat3_textrans)(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, m);
+  GLM(mat3_identity)(expected);
+
+  ASSERTIFY(test_assert_mat3_eq(m, expected))
 
   TEST_SUCCESS
 }

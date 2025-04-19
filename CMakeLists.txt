@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.8.2)
+cmake_minimum_required(VERSION 3.13)
 project(cglm
-  VERSION 0.9.2
+  VERSION 0.9.6
   HOMEPAGE_URL https://github.com/recp/cglm
   DESCRIPTION "OpenGL Mathematics (glm) for C"
   LANGUAGES C
@@ -32,18 +32,23 @@ if(CGLM_USE_C99)
 endif()
 
 if(MSVC)
-  add_definitions(-DNDEBUG -D_WINDOWS -D_USRDLL)
-  add_compile_options(/W3 /Ox /Gy /Oi /TC)
-  
-  # Ref: https://skia.googlesource.com/third_party/sdl/+/refs/heads/master/CMakeLists.txt#225
-  # Make sure /RTC1 is disabled, otherwise it will use functions from the CRT
-  foreach(flag_var
-      CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
-      CMAKE_C_FLAGS_MINSIZEREL CMAKE_C_FLAGS_RELWITHDEBINFO)
-    string(REGEX REPLACE "/RTC(su|[1su])" "" ${flag_var} "${${flag_var}}")
-  endforeach(flag_var)
+  add_definitions(-D_WINDOWS -D_USRDLL)
+
+  if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
+    add_definitions(-DNDEBUG)
+    add_compile_options(/W3 /Ox /Gy /Oi /TC)
+    foreach(flag_var
+        CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
+        CMAKE_C_FLAGS_MINSIZEREL CMAKE_C_FLAGS_RELWITHDEBINFO)
+      string(REGEX REPLACE "/RTC(su|[1su])" "" ${flag_var} "${${flag_var}}")
+    endforeach(flag_var)
+  endif()
 else()
-  add_compile_options(-Wall -O3)
+  add_compile_options(-Wall -Wextra -Wpedantic -Wconversion)
+
+  if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
+    add_compile_options(-O3)
+  endif()
 endif()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
@@ -88,8 +93,10 @@ add_library(${PROJECT_NAME}
   src/mat4x2.c
   src/mat4x3.c
   src/plane.c
+  src/noise.c
   src/frustum.c
   src/box.c
+  src/aabb2d.c
   src/project.c
   src/sphere.c
   src/ease.c

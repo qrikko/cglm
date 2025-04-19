@@ -178,6 +178,42 @@ glmc_vec3_minadd(vec3 a, vec3 b, vec3 dest) {
 
 CGLM_EXPORT
 void
+glmc_vec3_subsub(vec3 a, vec3 b, vec3 dest) {
+  glm_vec3_subsub(a, b, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_addsub(vec3 a, vec3 b, vec3 dest) {
+  glm_vec3_addsub(a, b, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_mulsub(vec3 a, vec3 b, vec3 dest) {
+  glm_vec3_mulsub(a, b, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_mulsubs(vec3 a, float s, vec3 dest) {
+  glm_vec3_mulsubs(a, s, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_maxsub(vec3 a, vec3 b, vec3 dest) {
+  glm_vec3_maxsub(a, b, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_minsub(vec3 a, vec3 b, vec3 dest) {
+  glm_vec3_minsub(a, b, dest);
+}
+
+CGLM_EXPORT
+void
 glmc_vec3_negate(vec3 v) {
   glm_vec3_negate(v);
 }
@@ -274,12 +310,6 @@ glmc_vec3_lerpc(vec3 from, vec3 to, float t, vec3 dest) {
 
 CGLM_EXPORT
 void
-glmc_vec3_step_uni(float edge, vec3 x, vec3 dest) {
-  glm_vec3_step_uni(edge, x, dest);
-}
-
-CGLM_EXPORT
-void
 glmc_vec3_step(vec3 edge, vec3 x, vec3 dest) {
   glm_vec3_step(edge, x, dest);
 }
@@ -306,6 +336,12 @@ CGLM_EXPORT
 void
 glmc_vec3_smoothinterpc(vec3 from, vec3 to, float t, vec3 dest) {
   glm_vec3_smoothinterpc(from, to, t, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_swizzle(vec3 v, int mask, vec3 dest) {
+  glm_vec3_swizzle(v, mask, dest);
 }
 
 /* ext */
@@ -407,6 +443,30 @@ glmc_vec3_fract(vec3 v, vec3 dest) {
 }
 
 CGLM_EXPORT
+void
+glmc_vec3_floor(vec3 v, vec3 dest) {
+  glm_vec3_floor(v, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_mods(vec3 v, float s, vec3 dest) {
+  glm_vec3_mods(v, s, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_steps(float edge, vec3 v, vec3 dest) {
+  glm_vec3_steps(edge, v, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_stepr(vec3 edge, float v, vec3 dest) {
+  glm_vec3_stepr(edge, v, dest);
+}
+
+CGLM_EXPORT
 float
 glmc_vec3_hadd(vec3 v) {
   return glm_vec3_hadd(v);
@@ -420,6 +480,24 @@ glmc_vec3_sqrt(vec3 v, vec3 dest) {
 
 CGLM_EXPORT
 void
-glmc_vec3_make(float * __restrict src, vec3 dest) {
+glmc_vec3_make(const float * __restrict src, vec3 dest) {
   glm_vec3_make(src, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_faceforward(vec3 n, vec3 v, vec3 nref, vec3 dest) {
+  glm_vec3_faceforward(n, v, nref, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_vec3_reflect(vec3 v, vec3 n, vec3 dest) {
+  glm_vec3_reflect(v, n, dest);
+}
+
+CGLM_EXPORT
+bool
+glmc_vec3_refract(vec3 v, vec3 n, float eta, vec3 dest) {
+  return glm_vec3_refract(v, n, eta, dest);
 }

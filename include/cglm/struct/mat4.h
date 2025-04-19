@@ -42,7 +42,8 @@
    CGLM_INLINE mat4s   glms_mat4_swap_col(mat4s mat, int col1, int col2);
    CGLM_INLINE mat4s   glms_mat4_swap_row(mat4s mat, int row1, int row2);
    CGLM_INLINE float   glms_mat4_rmc(vec4s r, mat4s m, vec4s c);
-   CGLM_INLINE mat4s   glms_mat4_make(float * __restrict src);
+   CGLM_INLINE mat4s   glms_mat4_make(const float * __restrict src);
+   CGLM_INLINE mat4s   glms_mat4_textrans(float sx, float sy, float rot, float tx, float ty);
  */
 
 #ifndef cglms_mat4s_h
@@ -107,7 +108,7 @@ glms_mat4_(copy)(mat4s mat) {
  * mat4 mat = GLM_MAT4_IDENTITY_INIT;
  * @endcode
  *
- * @retuns  destination
+ * @returns  destination
  */
 CGLM_INLINE
 mat4s
@@ -200,12 +201,12 @@ glms_mat4_(ins3)(mat3s mat, mat4s dest) {
  *
  * @code
  * mat4 m = GLM_MAT4_IDENTITY_INIT;
- * glm_mat4_mul(m, m, m);
+ * r = glms_mat4_mul(m, m);
  * @endcode
  *
  * @param[in]  m1   left matrix
  * @param[in]  m2   right matrix
- * @returns         destination matrix
+ * @returns destination matrix
  */
 CGLM_INLINE
 mat4s
@@ -223,7 +224,7 @@ glms_mat4_(mul)(mat4s m1, mat4s m2) {
  * size but if <b>len</b> is too small then compiler may unroll whole loop,
  * usage:
  * @code
- * mat m1, m2, m3, m4, res;
+ * mat4 m1, m2, m3, m4, res;
  *
  * res = glm_mat4_mulN((mat4 *[]){&m1, &m2, &m3, &m4}, 4);
  * @endcode
@@ -319,7 +320,7 @@ glms_mat4_(mulv3)(mat4s m, vec3s v, float last) {
 }
 
 /*!
- * @brief tranpose mat4 and store result in same matrix
+ * @brief transpose mat4 and store result in same matrix
  *
  * @param[in] m source
  * @returns     result
@@ -468,9 +469,27 @@ glms_mat4_(rmc)(vec4s r, mat4s m, vec4s c) {
  */
 CGLM_INLINE
 mat4s
-glms_mat4_(make)(float * __restrict src) {
+glms_mat4_(make)(const float * __restrict src) {
   mat4s r;
   glm_mat4_make(src, r.raw);
+  return r;
+}
+
+/*!
+ * @brief Create mat4 matrix from texture transform parameters
+ *
+ * @param[in]  sx  scale x
+ * @param[in]  sy  scale y
+ * @param[in]  rot rotation in radians CCW/RH
+ * @param[in]  tx  translate x
+ * @param[in]  ty  translate y
+ * @return texture transform matrix
+ */
+CGLM_INLINE
+mat4s
+glms_mat4_(textrans)(float sx, float sy, float rot, float tx, float ty) {
+  mat4s r;
+  glm_mat4_textrans(sx, sy, rot, tx, ty, r.raw);
   return r;
 }
 

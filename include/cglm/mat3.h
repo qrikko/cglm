@@ -31,6 +31,7 @@
    CGLM_INLINE void  glm_mat3_swap_row(mat3 mat, int row1, int row2);
    CGLM_INLINE float glm_mat3_rmc(vec3 r, mat3 m, vec3 c);
    CGLM_INLINE void  glm_mat3_make(float * restrict src, mat3 dest);
+   CGLM_INLINE void  glm_mat3_textrans(float sx, float sy, float rot, float tx, float ty, mat3 dest);
  */
 
 #ifndef cglm_mat3_h
@@ -201,7 +202,7 @@ glm_mat3_transpose_to(mat3 m, mat3 dest) {
 }
 
 /*!
- * @brief tranpose mat3 and store result in same matrix
+ * @brief transpose mat3 and store result in same matrix
  *
  * @param[in, out] m source and dest
  */
@@ -334,7 +335,7 @@ glm_mat3_det(mat3 mat) {
         d = mat[1][0], e = mat[1][1], f = mat[1][2],
         g = mat[2][0], h = mat[2][1], i = mat[2][2];
 
-  return a * (e * i - h * f) - d * (b * i - c * h) + g * (b * f - c * e);
+  return a * (e * i - h * f) - d * (b * i - h * c) + g * (b * f - e * c);
 }
 
 /*!
@@ -346,24 +347,22 @@ glm_mat3_det(mat3 mat) {
 CGLM_INLINE
 void
 glm_mat3_inv(mat3 mat, mat3 dest) {
-  float det;
   float a = mat[0][0], b = mat[0][1], c = mat[0][2],
         d = mat[1][0], e = mat[1][1], f = mat[1][2],
-        g = mat[2][0], h = mat[2][1], i = mat[2][2];
+        g = mat[2][0], h = mat[2][1], i = mat[2][2],
 
-  dest[0][0] =   e * i - f * h;
-  dest[0][1] = -(b * i - h * c);
-  dest[0][2] =   b * f - e * c;
-  dest[1][0] = -(d * i - g * f);
-  dest[1][1] =   a * i - c * g;
-  dest[1][2] = -(a * f - d * c);
-  dest[2][0] =   d * h - g * e;
-  dest[2][1] = -(a * h - g * b);
-  dest[2][2] =   a * e - b * d;
+        c1  = e * i - f * h, c2 = d * i - g * f, c3 = d * h - g * e,
+        idt = 1.0f / (a * c1 - b * c2 + c * c3), ndt = -idt;
 
-  det = 1.0f / (a * dest[0][0] + b * dest[1][0] + c * dest[2][0]);
-
-  glm_mat3_scale(dest, det);
+  dest[0][0] = idt * c1;
+  dest[0][1] = ndt * (b * i - h * c);
+  dest[0][2] = idt * (b * f - e * c);
+  dest[1][0] = ndt * c2;
+  dest[1][1] = idt * (a * i - g * c);
+  dest[1][2] = ndt * (a * f - d * c);
+  dest[2][0] = idt * c3;
+  dest[2][1] = ndt * (a * h - g * b);
+  dest[2][2] = idt * (a * e - d * b);
 }
 
 /*!
@@ -436,7 +435,7 @@ glm_mat3_rmc(vec3 r, mat3 m, vec3 c) {
  */
 CGLM_INLINE
 void
-glm_mat3_make(float * __restrict src, mat3 dest) {
+glm_mat3_make(const float * __restrict src, mat3 dest) {
   dest[0][0] = src[0];
   dest[0][1] = src[1];
   dest[0][2] = src[2];
@@ -448,6 +447,34 @@ glm_mat3_make(float * __restrict src, mat3 dest) {
   dest[2][0] = src[6];
   dest[2][1] = src[7];
   dest[2][2] = src[8];
+}
+
+/*!
+ * @brief Create mat3 matrix from texture transform parameters
+ *
+ * @param[in]  sx   scale x
+ * @param[in]  sy   scale y
+ * @param[in]  rot  rotation in radians CCW/RH
+ * @param[in]  tx   translate x
+ * @param[in]  ty   translate y
+ * @param[out] dest texture transform matrix
+ */
+CGLM_INLINE
+void
+glm_mat3_textrans(float sx, float sy, float rot, float tx, float ty, mat3 dest) {
+  float c, s;
+
+  c = cosf(rot);
+  s = sinf(rot);
+
+  glm_mat3_identity(dest);
+
+  dest[0][0] =  c * sx;
+  dest[0][1] = -s * sy;
+  dest[1][0] =  s * sx;
+  dest[1][1] =  c * sy;
+  dest[2][0] =  tx;
+  dest[2][1] =  ty;
 }
 
 #endif /* cglm_mat3_h */

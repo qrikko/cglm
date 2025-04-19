@@ -67,8 +67,10 @@ cglm_HEADERS = include/cglm/version.h \
                include/cglm/util.h \
                include/cglm/quat.h \
                include/cglm/plane.h \
+               include/cglm/noise.h \
                include/cglm/frustum.h \
                include/cglm/box.h \
+               include/cglm/aabb2d.h \
                include/cglm/color.h \
                include/cglm/project.h \
                include/cglm/sphere.h \
@@ -119,6 +121,7 @@ cglm_call_HEADERS = include/cglm/call/mat4.h \
                     include/cglm/call/quat.h \
                     include/cglm/call/euler.h \
                     include/cglm/call/plane.h \
+                    include/cglm/call/noise.h \
                     include/cglm/call/frustum.h \
                     include/cglm/call/box.h \
                     include/cglm/call/project.h \
@@ -128,7 +131,8 @@ cglm_call_HEADERS = include/cglm/call/mat4.h \
                     include/cglm/call/bezier.h \
                     include/cglm/call/ray.h \
                     include/cglm/call/affine.h \
-                    include/cglm/call/affine2d.h
+                    include/cglm/call/affine2d.h \
+                    include/cglm/call/aabb2d.h
 
 cglm_call_clipspacedir=$(includedir)/cglm/call/clipspace
 cglm_call_clipspace_HEADERS = include/cglm/call/clipspace/persp_lh_no.h \
@@ -149,7 +153,8 @@ cglm_call_clipspace_HEADERS = include/cglm/call/clipspace/persp_lh_no.h \
 cglm_simddir=$(includedir)/cglm/simd
 cglm_simd_HEADERS = include/cglm/simd/intrin.h \
                     include/cglm/simd/x86.h \
-                    include/cglm/simd/arm.h
+                    include/cglm/simd/arm.h \
+                    include/cglm/simd/wasm.h
 
 cglm_simd_sse2dir=$(includedir)/cglm/simd/sse2
 cglm_simd_sse2_HEADERS = include/cglm/simd/sse2/affine.h \
@@ -168,6 +173,17 @@ cglm_simd_neon_HEADERS = include/cglm/simd/neon/affine.h \
                          include/cglm/simd/neon/mat4.h \
                          include/cglm/simd/neon/quat.h
 
+cglm_simd_wasmdir=$(includedir)/cglm/simd/wasm
+cglm_simd_wasm_HEADERS = include/cglm/simd/wasm/affine.h \
+                         include/cglm/simd/wasm/mat2.h \
+                         include/cglm/simd/wasm/mat3.h \
+                         include/cglm/simd/wasm/mat4.h \
+                         include/cglm/simd/wasm/quat.h
+
+cglm_handeddir=$(includedir)/cglm/handed
+cglm_handed_HEADERS = include/cglm/handed/euler_to_quat_lh.h \
+                      include/cglm/handed/euler_to_quat_rh.h
+
 cglm_structdir=$(includedir)/cglm/struct
 cglm_struct_HEADERS = include/cglm/struct/mat4.h \
                       include/cglm/struct/mat4x2.h \
@@ -185,21 +201,27 @@ cglm_struct_HEADERS = include/cglm/struct/mat4.h \
                       include/cglm/struct/affine2d.h \
                       include/cglm/struct/vec2.h \
                       include/cglm/struct/vec2-ext.h \
+                      include/cglm/struct/ivec2.h \
                       include/cglm/struct/vec3.h \
                       include/cglm/struct/vec3-ext.h \
+                      include/cglm/struct/ivec3.h \
                       include/cglm/struct/vec4.h \
                       include/cglm/struct/vec4-ext.h \
+                      include/cglm/struct/ivec4.h \
                       include/cglm/struct/io.h \
                       include/cglm/struct/cam.h \
                       include/cglm/struct/quat.h \
                       include/cglm/struct/euler.h \
                       include/cglm/struct/plane.h \
+                      include/cglm/struct/noise.h \
                       include/cglm/struct/frustum.h \
                       include/cglm/struct/box.h \
+                      include/cglm/struct/aabb2d.h \
                       include/cglm/struct/project.h \
                       include/cglm/struct/sphere.h \
                       include/cglm/struct/color.h \
-                      include/cglm/struct/curve.h
+                      include/cglm/struct/curve.h \
+                      include/cglm/struct/ray.h
 
 cglm_struct_clipspacedir=$(includedir)/cglm/struct/clipspace
 cglm_struct_clipspace_HEADERS = include/cglm/struct/clipspace/persp_lh_no.h \
@@ -216,6 +238,10 @@ cglm_struct_clipspace_HEADERS = include/cglm/struct/clipspace/persp_lh_no.h \
                                 include/cglm/struct/clipspace/view_rh_zo.h \
                                 include/cglm/struct/clipspace/project_no.h \
                                 include/cglm/struct/clipspace/project_zo.h
+
+cglm_struct_handeddir=$(includedir)/cglm/struct/handed
+cglm_struct_handed_HEADERS = include/cglm/struct/handed/euler_to_quat_lh.h \
+                             include/cglm/struct/handed/euler_to_quat_rh.h
 
 libcglm_la_SOURCES=\
     src/euler.c \
@@ -239,6 +265,7 @@ libcglm_la_SOURCES=\
     src/mat4x2.c \
     src/mat4x3.c \
     src/plane.c \
+    src/noise.c \
     src/frustum.c \
     src/box.c \
     src/project.c \
@@ -248,6 +275,7 @@ libcglm_la_SOURCES=\
     src/bezier.c \
     src/ray.c \
     src/affine2d.c \
+    src/aabb2d.c \
     src/clipspace/ortho_lh_no.c \
     src/clipspace/ortho_lh_zo.c \
     src/clipspace/ortho_rh_no.c \

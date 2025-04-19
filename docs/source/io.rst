@@ -24,12 +24,12 @@ Example to print mat4 matrix:
    /* ... */
    glm_mat4_print(transform, stderr);
 
-**NOTE:** print functions use **%0.4f** precision if you need more
-(you probably will in some cases), you can change it temporary.
-cglm may provide precision parameter in the future
+.. note:: print functions use **%0.4f** precision if you need more
+   (you probably will in some cases), you can change it temporary.
+   cglm may provide precision parameter in the future.
 
 Changes since **v0.7.3**:
-* Now mis-alignment of columns are fixed: larger numbers are printed via %g and others are printed via %f. Column withs are calculated before print.
+* Now mis-alignment of columns are fixed: larger numbers are printed via %g and others are printed via %f. Column widths are calculated before print.
 * Now values are colorful ;)
 * Some print improvements
 * New options with default values:
@@ -143,5 +143,5 @@ Functions documentation
 
     Parameters:
       | *[in]*  **vec**      aabb (axis-aligned bounding box)
-      | *[in]*  **tag**      tag to find it more easly in logs
+      | *[in]*  **tag**      tag to find it more easily in logs
       | *[in]*  **ostream**  FILE to write

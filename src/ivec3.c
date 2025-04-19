@@ -33,6 +33,24 @@ glmc_ivec3_one(ivec3 v) {
 }
 
 CGLM_EXPORT
+int
+glmc_ivec3_dot(ivec3 a, ivec3 b) {
+  return glm_ivec3_dot(a, b);
+}
+
+CGLM_EXPORT
+int
+glmc_ivec3_norm2(ivec3 v) {
+  return glm_ivec3_norm2(v);
+}
+
+CGLM_EXPORT
+int
+glmc_ivec3_norm(ivec3 v) {
+  return glm_ivec3_norm(v);
+}
+
+CGLM_EXPORT
 void
 glmc_ivec3_add(ivec3 a, ivec3 b, ivec3 dest) {
   glm_ivec3_add(a, b, dest);
@@ -66,6 +84,120 @@ CGLM_EXPORT
 void
 glmc_ivec3_scale(ivec3 v, int s, ivec3 dest) {
   glm_ivec3_scale(v, s, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_ivec3_div(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_div(a, b, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_ivec3_divs(ivec3 v, int s, ivec3 dest) {
+  glm_ivec3_divs(v, s, dest);
+}
+
+CGLM_EXPORT
+void
+glmc_ivec3_mod(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_mod(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_addadd(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_addadd(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_addadds(ivec3 a, int s, ivec3 dest) {
+  glm_ivec3_addadds(a, s, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_subadd(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_subadd(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_subadds(ivec3 a, int s, ivec3 dest) {
+  glm_ivec3_subadds(a, s, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_muladd(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_muladd(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_muladds(ivec3 a, int s, ivec3 dest) {
+  glm_ivec3_muladds(a, s, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_maxadd(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_maxadd(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_minadd(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_minadd(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_subsub(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_subsub(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_subsubs(ivec3 a, int s, ivec3 dest) {
+  glm_ivec3_subsubs(a, s, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_addsub(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_addsub(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_addsubs(ivec3 a, int s, ivec3 dest) {
+  glm_ivec3_addsubs(a, s, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_mulsub(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_mulsub(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_mulsubs(ivec3 a, int s, ivec3 dest) {
+  glm_ivec3_mulsubs(a, s, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_maxsub(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_maxsub(a, b, dest);
+}
+
+CGLM_EXPORT 
+void 
+glmc_ivec3_minsub(ivec3 a, ivec3 b, ivec3 dest) {
+  glm_ivec3_minsub(a, b, dest);
 }
 
 CGLM_EXPORT
@@ -121,4 +253,3 @@ void
 glmc_ivec3_abs(ivec3 v, ivec3 dest) {
   glm_ivec3_abs(v, dest);
 }
-
